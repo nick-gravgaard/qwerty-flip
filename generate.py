@@ -70,7 +70,7 @@ def run_klfc(filepath_move_root: str):
 
 def gen(country: str):
     os.mkdir(country)
-    filepath_in = f'qwerty_{country}.json'  # QWERY-Flip is based on QWERTY layout
+    filepath_in = f'qwerty_{country}.json'  # QWERTY-Flip is based on QWERTY layout
     for move_name, move_list in SWAPS.items():
         filepath_move_root = f'{country}/qwerty-{move_name}_{country}'
         filepath_out = f'{filepath_move_root}.json'
