@@ -3,8 +3,8 @@ QWERTY-Flip
 
 The better keyboard layout your fingers already know.
 
-For information on what [QWERTY-Flip](https://nickgravgaard.com/qwerty-flip/) is,
-and why you might want to try it, see https://nickgravgaard.com/qwerty-flip/
+For information on what [QWERTY-Flip](https://nick-gravgaard.com/qwerty-flip/) is,
+and why you might want to try it, see https://nick-gravgaard.com/qwerty-flip/
 
 If you want to try QWERTY-Flip you can find the layout files for different
 operating systems in this repo. It has these formats:
