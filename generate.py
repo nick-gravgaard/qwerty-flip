@@ -2,6 +2,8 @@
 
 import json
 import os
+import pathlib
+import shutil
 import subprocess
 from typing import Dict, List
 
@@ -69,6 +71,7 @@ def run_klfc(filepath_move_root: str):
 
 
 def gen(country: str):
+    shutil.rmtree(country)
     os.mkdir(country)
     filepath_in = f'qwerty_{country}.json'  # QWERTY-Flip is based on QWERTY layout
     for move_name, move_list in SWAPS.items():
@@ -81,9 +84,18 @@ def gen(country: str):
         run_klfc(filepath_move_root)
 
 
+def fix_macos_files():
+    # see https://github.com/39aldo39/klfc/issues/42
+    us_keylayout_paths = list(pathlib.Path('us').rglob('*.keylayout'))
+    for path in us_keylayout_paths:
+        text = path.read_text().replace('<key code="10"', '<key code="50"')
+        path.write_text(text)
+
+
 def main():
     for country in COUNTRIES:
         gen(country)
+    fix_macos_files()
 
 
 if __name__ == '__main__':

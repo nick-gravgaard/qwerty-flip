@@ -24,7 +24,7 @@
   </modifierMap>
   <keyMapSet id="defaultKeyMapSet">
     <keyMap index="0">
-      <key code="10" output="`" />
+      <key code="50" output="`" />
       <key code="18" output="1" />
       <key code="19" output="2" />
       <key code="20" output="3" />
@@ -121,7 +121,7 @@
       <key code="81" output="=" />
     </keyMap>
     <keyMap index="1">
-      <key code="10" output="~" />
+      <key code="50" output="~" />
       <key code="18" output="!" />
       <key code="19" output="@" />
       <key code="20" output="#" />
@@ -218,7 +218,7 @@
       <key code="81" output="=" />
     </keyMap>
     <keyMap index="2">
-      <key code="10" output="`" />
+      <key code="50" output="`" />
       <key code="18" output="1" />
       <key code="19" output="2" />
       <key code="20" output="3" />
@@ -315,7 +315,7 @@
       <key code="81" output="=" />
     </keyMap>
     <keyMap index="3">
-      <key code="10" output="~" />
+      <key code="50" output="~" />
       <key code="18" output="!" />
       <key code="19" output="@" />
       <key code="20" output="#" />
