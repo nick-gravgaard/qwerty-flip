@@ -6,6 +6,7 @@ import pathlib
 import shutil
 import subprocess
 from typing import Dict, List
+from random import randint
 
 
 COUNTRIES = [
@@ -86,9 +87,14 @@ def gen(country: str):
 
 def fix_macos_files():
     # see https://github.com/39aldo39/klfc/issues/42
-    us_keylayout_paths = list(pathlib.Path('us').rglob('*.keylayout'))
-    for path in us_keylayout_paths:
-        text = path.read_text().replace('<key code="10"', '<key code="50"')
+    keylayout_paths = list(pathlib.Path('.').rglob('*.keylayout'))
+    for path in keylayout_paths:
+        id = -1337
+        while id == -1337:
+            id = randint(-32768, -2)
+        text = path.read_text().replace('-1337', str(id))
+        if 'us' in path.parts:
+            text = text.replace('<key code="10"', '<key code="50"')
         path.write_text(text)
 
 
