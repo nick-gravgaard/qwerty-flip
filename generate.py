@@ -2,11 +2,11 @@
 
 import json
 import os
-import pathlib
+from pathlib import Path
 import shutil
 import subprocess
 from typing import Dict, List
-from random import randint
+from zlib import adler32
 
 
 COUNTRIES = [
@@ -71,6 +71,21 @@ def run_klfc(filepath_move_root: str):
     subprocess.run(['klfc', '--from-json', f'{filepath_move_root}.json', '-o', filepath_move_root])
 
 
+def fix_macos_file(country: str, move_name: str):
+    # see https://github.com/39aldo39/klfc/issues/42
+    layout_name = f'qwerty-{move_name}_{country}'
+    path = Path(f'{country}/{layout_name}/keylayout/custom.keylayout')
+
+    # id should be between -32768 and -2 according to:
+    # https://github.com/sillsdev/Ukelele/blob/bf60297399b33ce6be0bcb3a8eb656ffcc2a0e0c/Ukelele%20Cocoa/ScriptRanges.h#L14
+    new_id = str(adler32(layout_name.encode('utf-8')) % -32768)
+
+    text = path.read_text().replace('-1337', new_id)
+    if country == 'us':
+        text = text.replace('<key code="10"', '<key code="50"')
+    path.write_text(text)
+
+
 def gen(country: str):
     shutil.rmtree(country)
     os.mkdir(country)
@@ -83,25 +98,12 @@ def gen(country: str):
             text_out = gen_json_text(text_in, move_list)
             file_out.write(text_out)
         run_klfc(filepath_move_root)
-
-
-def fix_macos_files():
-    # see https://github.com/39aldo39/klfc/issues/42
-    keylayout_paths = list(pathlib.Path('.').rglob('*.keylayout'))
-    for path in keylayout_paths:
-        id = -1337
-        while id == -1337:
-            id = randint(-32768, -2)
-        text = path.read_text().replace('-1337', str(id))
-        if 'us' in path.parts:
-            text = text.replace('<key code="10"', '<key code="50"')
-        path.write_text(text)
+        fix_macos_file(country, move_name)
 
 
 def main():
     for country in COUNTRIES:
         gen(country)
-    fix_macos_files()
 
 
 if __name__ == '__main__':
